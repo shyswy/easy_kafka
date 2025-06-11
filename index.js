@@ -1,5 +1,5 @@
-const { KafkaConsumer, CONSUME_TYPE } = require('./consumer');
-const { KafkaProducer } = require('./producer');
+const { KafkaConsumer, CONSUME_TYPE } = require('./wrapper/consumer');
+const { KafkaProducer } = require('./wrapper/producer');
 
 module.exports = {
   KafkaConsumer,
