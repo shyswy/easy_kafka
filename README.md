@@ -11,8 +11,8 @@ KafkaJS 기반 Kafka Producer / Consumer 설정과 실행을 간편하게 추상
 ```
 wrapper/
 ├── kafka.js         // Kafka 기본 설정 래퍼
-├── consumer.js      // KafkaConsumer 추사화 클래스
-├── producer.js      // KafkaProducer 추사화 클래스
+├── consumer.js      // KafkaConsumer 추상화 클래스
+├── producer.js      // KafkaProducer 추상화 클래스
 ```
 
 ---
@@ -21,7 +21,7 @@ wrapper/
 
 * 인증 및 기본 설정을 공통화한 Kafka 생성 클래스
 * 다양한 메시지 consume 전략 지원
-  (`PRE_COMMIT`, `POST_COMMIT`, `AUTO_COMMIT`, `EACH_MESSAGE`)
+  (`PRE_COMMIT`, `POST_COMMIT`)
 * 메시지 전송 시 자동 첱크 처리 (배치 전략)
 * 이벤트 핸들링 및 오류 콜백 정의
 * 재사용성 높은 구성
@@ -44,8 +44,8 @@ npm install
 const { KafkaConsumer, CONSUME_TYPE } = require('./consumer');
 
 const consumer = new KafkaConsumer({
-  brokerAddresses: ['localhost:9092'],
-  clientId: 'my-app',
+  brokerAddresses: ['broker-address',
+  clientId: 'clientid',
   topicConfigs: { topic: 'my-topic', fromBeginning: true },
   consumeType: CONSUME_TYPE.POST_COMMIT_BATCH,
   consumeMethod: async (messages) => {
@@ -74,8 +74,8 @@ await consumer.init({
 const { KafkaProducer } = require('./producer');
 
 const producer = new KafkaProducer({
-  brokerAddresses: ['localhost:9092'],
-  clientId: 'my-app',
+  brokerAddresses: ['broker-address'],
+  clientId: 'client-id',
   errorCallback: () => {
     console.log('Producer error occurred');
   },
@@ -100,8 +100,7 @@ await producer.send('my-topic', [
 | ------------------- | ------------------------------------------------------- |
 | `PRE_COMMIT_BATCH`  | batch consuming 전략. 메시지 batch를 가져오자마자 offset을 전략한 후 처리  |
 | `POST_COMMIT_BATCH` | batch consuming 전략. 메시지 batch 처리 완료 후 offset 전략 (실패 무시) |
-| `AUTO_COMMIT`       | Kafka 기본 auto-commit 방식 사용                              |
-| `EACH_MESSAGE`      | 메시지를 개별로 처리하며 자동 코미트 사용 가능                              |
+
 
 > 기본 설정은 `PRE_COMMIT_BATCH`입니다.
 
