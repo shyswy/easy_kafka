@@ -1,37 +1,46 @@
-# easy_kafka
-Kafka Wrapper Module
-이 모듈은 kafkajs를 기반으로 Kafka Producer / Consumer의 설정과 실행을 간편하게 추상화한 래퍼입니다.
-보일러플레이트 코드를 줄이고, 다양한 환경에서 유연하게 Kafka를 사용할 수 있도록 설계되었습니다.
+# 🌀 easy\_kafka
 
-📁 프로젝트 구조
-pgsql
-복사
-편집
+**Kafka Wrapper Module**
+KafkaJS 기반 Kafka Producer / Consumer 설정과 실행을 간편하게 추사화한 래퍼입니다.
+반복적인 코드를 줄이고 다양한 환경에서 유연하게 Kafka를 사용할 수 있도록 개발되었습니다.
+
+---
+
+## 📁 프로젝트 구조
+
+```
 wrapper/
 ├── kafka.js         // Kafka 기본 설정 래퍼
-├── consumer.js      // KafkaConsumer 추상화 클래스
-├── producer.js      // KafkaProducer 추상화 클래스
-✨ 주요 기능
-인증 및 기본 설정을 공통화한 Kafka 생성 클래스
+├── consumer.js      // KafkaConsumer 추사화 클래스
+├── producer.js      // KafkaProducer 추사화 클래스
+```
 
-다양한 메시지 consume 전략 지원 (PRE_COMMIT, POST_COMMIT, AUTO_COMMIT, EACH_MESSAGE)
+---
 
-메시지 전송 시 자동 청크 처리 (배치 전송)
+## ✨ 주요 기능
 
-이벤트 핸들링 및 오류 콜백 정의
+* 인증 및 기본 설정을 공통화한 Kafka 생성 클래스
+* 다양한 메시지 consume 전략 지원
+  (`PRE_COMMIT`, `POST_COMMIT`, `AUTO_COMMIT`, `EACH_MESSAGE`)
+* 메시지 전송 시 자동 첱크 처리 (배치 전략)
+* 이벤트 핸들링 및 오류 콜백 정의
+* 재사용성 높은 구성
 
-재사용성 높은 구성
+---
 
-🔧 설치
-bash
-복사
-편집
+## 🔧 설치
+
+```bash
 npm install
-🧩 사용법
-KafkaConsumer
-js
-복사
-편집
+```
+
+---
+
+## 🧹 사용법
+
+### KafkaConsumer
+
+```js
 const { KafkaConsumer, CONSUME_TYPE } = require('./consumer');
 
 const consumer = new KafkaConsumer({
@@ -55,10 +64,13 @@ await consumer.init({
 
 // shutdown 시
 // await consumer.shutdown();
-KafkaProducer
-js
-복사
-편집
+```
+
+---
+
+### KafkaProducer
+
+```js
 const { KafkaProducer } = require('./producer');
 
 const producer = new KafkaProducer({
@@ -78,19 +90,33 @@ await producer.send('my-topic', [
 
 // shutdown 시
 // await producer.shutdown();
-📌 Consume 전략
-Consume Type	설명
-PRE_COMMIT_BATCH	batch consuming 전략. 메시지 batch를 가져오자마자 last offset을 커밋한 후 처리
-POST_COMMIT_BATCH	batch consuming 전략. 메시지 batch를 가져온 뒤, 모든 처리 완료 후 last offset을 커밋 ( 실패는 무시한다. )
+```
 
-기본 설정은 PRE_COMMIT_BATCH입니다.
+---
 
-📌 produce 전략
-kafka 기본 설정 상, 한번에 1MB 크기의 메시지 모음만 전송 가능합니다.
-따라서, message size 초과를 방지하기 위하여 chunk 수를 전달하여 1번에 전달하는 메시지 수를 제어 가능합니다.
-또한, 기본적으로 매 produce 마다 kafka와 connect & disconnect를 반복하는 전략을 취하고 있습니다.
-추후 확장에서, 한번 kafka와 맺은 연결을 지속할 수 있도록 정책을 추가할 예정입니다.
+## 📌 Consume 전략
 
-🛠 사용 예시
-아래 repository 참고.
-https://github.com/shyswy/easy_kafka_example
+| Consume Type        | 설명                                                      |
+| ------------------- | ------------------------------------------------------- |
+| `PRE_COMMIT_BATCH`  | batch consuming 전략. 메시지 batch를 가져오자마자 offset을 전략한 후 처리  |
+| `POST_COMMIT_BATCH` | batch consuming 전략. 메시지 batch 처리 완료 후 offset 전략 (실패 무시) |
+| `AUTO_COMMIT`       | Kafka 기본 auto-commit 방식 사용                              |
+| `EACH_MESSAGE`      | 메시지를 개별로 처리하며 자동 코미트 사용 가능                              |
+
+> 기본 설정은 `PRE_COMMIT_BATCH`입니다.
+
+---
+
+## 📌 Produce 전략
+
+* Kafka 기본 설정상 1MB 이상의 메시지는 전송이 불가합니다.
+* 이를 방지하기 위해 메시지를 첱크 단위로 나누어 전송합니다.
+* 기본적으로 `produce()` 호출 시마다 Kafka에 connect/disconnect를 반복합니다.
+* 추후에는 연결을 유지하는 지속적 연결 전략도 제공할 예정입니다.
+
+---
+
+## 🛠 사용 예시
+
+* 아래 레포지트를 참고하세요.
+  🔗 [https://github.com/shyswy/easy\_kafka\_example](https://github.com/shyswy/easy_kafka_example)
