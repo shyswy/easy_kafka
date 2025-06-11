@@ -117,5 +117,5 @@ await producer.send('my-topic', [
 
 ## 🛠 사용 예시
 
-* 아래 레포지트를 참고하세요.
+* 아래 repository를 참고하세요.
   🔗 [https://github.com/shyswy/easy\_kafka\_example](https://github.com/shyswy/easy_kafka_example)
