@@ -1,0 +1,26 @@
+{
+  "name": "easy_kafka",
+  "version": "1.2.2",
+  "description": "An easy-to-use KafkaJS wrapper that simplifies producer and consumer setup, abstracts consume and offset management strategies, and provides convenient error handling",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shyswy/easy_kafka.git"
+  },
+  "keywords": [
+    "kafka"
+  ],
+  "author": "sanghyunyoon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shyswy/easy_kafka/issues"
+  },
+  "homepage": "https://github.com/shyswy/easy_kafka#readme",
+  "dependencies": {
+    "kafkajs": "^2.2.4",
+    "uuid": "^11.1.0"
+  }
+}
