@@ -1,6 +1,6 @@
 {
   "name": "easy_kafkajs",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "An easy-to-use KafkaJS wrapper that simplifies producer and consumer setup, abstracts consume and offset management strategies, and provides convenient error handling",
   "main": "index.js",
   "scripts": {
