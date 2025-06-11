@@ -1,7 +1,7 @@
 # 🌀 easy\_kafka
 
 **Kafka Wrapper Module**
-KafkaJS 기반 Kafka Producer / Consumer 설정과 실행을 간편하게 추사화한 래퍼입니다.
+KafkaJS 기반 Kafka Producer / Consumer 설정과 실행을 간편하게 추상화한 Wrapper module 입니다.
 반복적인 코드를 줄이고 다양한 환경에서 유연하게 Kafka를 사용할 수 있도록 개발되었습니다.
 
 ---
